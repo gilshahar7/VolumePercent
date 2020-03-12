@@ -156,7 +156,7 @@ static void loadPrefs() {
           NSDictionary *metricsVPM = [NSDictionary dictionaryWithObjectsAndKeys:verticalPaddingMinimized2, @"verticalPaddingMinimized", nil];
           self.topConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-verticalPaddingMinimized-[percentLabel]" options:0 metrics:metricsVPM views:NSDictionaryOfVariableBindings(percentLabel)];
           [self.sliderView addConstraints:self.topConstraint];
-self.orientationFlippedToLandscape = false;
+          self.orientationFlippedToLandscape = false;
           [self.sliderView removeConstraint:self.centerConstraint];
           self.centerConstraint = nil;
 
@@ -189,7 +189,7 @@ self.orientationFlippedToLandscape = false;
           NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
           [percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
 
-self.orientationFlippedToLandscape = false;
+          self.orientationFlippedToLandscape = false;
           [UIView animateWithDuration:0.2 animations:^{
             [percentLabel setFont:[UIFont systemFontOfSize:fontSizeEnlarged]];
             [self.view layoutIfNeeded];
