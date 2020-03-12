@@ -1,0 +1,9 @@
+Package: com.gilshahar7.volumepercent
+Name: VolumePercent
+Depends: mobilesubstrate, org.thebigboss.libcolorpicker
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Displays the volume percentage on the stock volume HUD.
+Maintainer: gilshahar7
+Author: gilshahar7
+Section: Tweaks
