@@ -1,7 +1,7 @@
 ARCHS = arm64 armv7 arm64e
 export TARGET = iphone:clang:10.3:7.0
 include $(THEOS)/makefiles/common.mk
-
+FINALPACKAGE=1
 BUNDLE_NAME = VolumePercentPrefs
 
 VolumePercentPrefs_FILES = vppRootListController.m
