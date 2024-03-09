@@ -1,5 +1,8 @@
-#import "libcolorpicker.h"
-#define PLIST_PATH @"/var/mobile/Library/Preferences/com.gilshahar7.volumepercentprefs.plist"
+//#import "libcolorpicker.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <rootless.h>
+#define PLIST_PATH ROOT_PATH_NS(@"/var/mobile/Library/Preferences/com.gilshahar7.volumepercentprefs.plist")
 
 @interface _UILegibilityLabel
 @property (nonatomic, retain) NSString *string;
@@ -29,7 +32,7 @@ float verticalPaddingMinimized = -20.0;
 float verticalPaddingEnlarged = 10.0;
 
 static void loadPrefs() {
-	NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
+    NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     fontSizeMinimized = (int)[[prefs objectForKey:@"fontSizeMinimized"]?:@(10) intValue];
     fontSizeEnlarged = (int)[[prefs objectForKey:@"fontSizeEnlarged"]?:@(15) intValue];
     horizontalPaddingMinimized = (int)[[prefs objectForKey:@"horizontalPaddingMinimized"]?:@(0) intValue];
@@ -39,6 +42,29 @@ static void loadPrefs() {
 
 }
 
+static UIColor *colorWithHexString(NSString *hex) {
+
+    NSString *reductedString = [hex stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    if ([reductedString length] == 3) {
+      reductedString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
+      [reductedString substringWithRange:NSMakeRange(0, 1)],[reductedString substringWithRange:NSMakeRange(0, 1)],
+      [reductedString substringWithRange:NSMakeRange(1, 1)],[reductedString substringWithRange:NSMakeRange(1, 1)],
+      [reductedString substringWithRange:NSMakeRange(2, 1)],[reductedString substringWithRange:NSMakeRange(2, 1)]];
+    }
+
+    if ([reductedString length] == 6) {
+      reductedString = [reductedString stringByAppendingString:@"ff"];
+    }
+
+    unsigned int baseValue;
+    [[NSScanner scannerWithString:reductedString] scanHexInt:&baseValue];
+    float red = ((baseValue >> 24) & 0xFF)/255.0f;
+    float green = ((baseValue >> 16) & 0xFF)/255.0f;
+    float blue = ((baseValue >> 8) & 0xFF)/255.0f;
+    float alpha = ((baseValue >> 0) & 0xFF)/255.0f;
+    
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
 
 %hook SBElasticVolumeViewController
 %property (assign) BOOL enlarged;
@@ -59,7 +85,8 @@ static void loadPrefs() {
     [percentLabel setText:percentstr];//Set text in label.
     [percentLabel setFont:[UIFont systemFontOfSize:fontSizeEnlarged]];
     NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    [percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
+    //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
+    [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"enlargedColor"])];
     [percentLabel setTextAlignment:NSTextAlignmentCenter];//Set text alignment in label.
     [percentLabel setBaselineAdjustment:UIBaselineAdjustmentAlignBaselines];//Set line adjustment.
     percentLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -87,7 +114,7 @@ static void loadPrefs() {
 
 }
 
--(void)updateVolumeLevel:(float)arg1{
+-(void)updateValue:(float)arg1{
   %orig;
   if(self.percentLabel){
     arg1 = arg1*100;
@@ -132,7 +159,8 @@ static void loadPrefs() {
 
 
         NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-        [percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
+        //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
+        [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"minimizedColor"])];
         [percentLabel setFont:[UIFont systemFontOfSize:fontSizeMinimized]];
         [self.view layoutIfNeeded];
         [self.percentLabel sizeToFit];
@@ -161,7 +189,8 @@ static void loadPrefs() {
           self.centerConstraint = nil;
 
           NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-          [percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
+          //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
+            [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"minimizedColor"])];
 
           [UIView animateWithDuration:0.2 animations:^{
             [percentLabel setFont:[UIFont systemFontOfSize:fontSizeMinimized]];
@@ -187,8 +216,8 @@ static void loadPrefs() {
           [self.sliderView addConstraints:self.topConstraint];
 
           NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-          [percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
-
+          //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
+            [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"enlargedColor"])];
           self.orientationFlippedToLandscape = false;
           [UIView animateWithDuration:0.2 animations:^{
             [percentLabel setFont:[UIFont systemFontOfSize:fontSizeEnlarged]];

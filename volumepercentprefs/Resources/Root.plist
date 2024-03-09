@@ -10,7 +10,7 @@
 			<key>label</key>
 			<string>Minimized settings</string>
 		</dict>
-		<dict>
+		<!-- <dict>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
@@ -28,6 +28,24 @@
 				<key>alpha</key>
 				<true/>
 			</dict>
+			<key>label</key>
+			<string>Text color</string>
+		</dict> -->
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>EXMColorPickerCell</string>
+			<key>fallback</key>
+			<string>D3D3D3</string>
+			<key>key</key>
+			<string>minimizedColor</string>
+			<key>supportAlpha</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.gilshahar7.volumepercentprefs</string>
+			<key>PostNotification</key>
+			<string>com.gilshahar7.volumepercentprefs.settingschanged</string>
 			<key>label</key>
 			<string>Text color</string>
 		</dict>
@@ -79,7 +97,7 @@
 			<key>label</key>
 			<string>Enlarged settings</string>
 		</dict>
-		<dict>
+		<!-- <dict>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
@@ -97,6 +115,24 @@
 				<key>alpha</key>
 				<true/>
 			</dict>
+			<key>label</key>
+			<string>Text color</string>
+		</dict> -->
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>EXMColorPickerCell</string>
+			<key>fallback</key>
+			<string>D3D3D3</string>
+			<key>key</key>
+			<string>enlargedColor</string>
+			<key>supportAlpha</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.gilshahar7.volumepercentprefs</string>
+			<key>PostNotification</key>
+			<string>com.gilshahar7.volumepercentprefs.settingschanged</string>
 			<key>label</key>
 			<string>Text color</string>
 		</dict>

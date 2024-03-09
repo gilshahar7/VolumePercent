@@ -1,14 +1,17 @@
-ARCHS = arm64 armv7 arm64e
-export TARGET = iphone:clang:10.3:7.0
+FINALPACKAGE = 1
+ARCHS = arm64 arm64e
+THEOS_PACKAGE_SCHEME=rootless
+TARGET := iphone:clang:16.5:15.0
+INSTALL_TARGET_PROCESSES = SpringBoard
+
+
 include $(THEOS)/makefiles/common.mk
-FINALPACKAGE=1
+
 TWEAK_NAME = VolumePercent
+
 VolumePercent_FILES = Tweak.xm
-VolumePercent_LIBRARIES = colorpicker
+VolumePercent_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-
-after-install::
-	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += volumepercentprefs
 include $(THEOS_MAKE_PATH)/aggregate.mk

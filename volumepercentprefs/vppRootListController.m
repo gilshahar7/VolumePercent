@@ -1,16 +1,18 @@
-#include "vppRootListController.h"
+#import <Foundation/Foundation.h>
+#import "vppRootListController.h"
 #import <Preferences/PSSpecifier.h>
+#import <rootless.h>
 @implementation vppRootListController
 
 - (id)readPreferenceValue:(PSSpecifier*)specifier {
-	NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+	NSString *path = [NSString stringWithFormat:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/%@.plist"), specifier.properties[@"defaults"]];
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	[settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
 	return (settings[specifier.properties[@"key"]]) ?: specifier.properties[@"default"];
 }
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {
-	NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", specifier.properties[@"defaults"]];
+	NSString *path = [NSString stringWithFormat:ROOT_PATH_NS(@"/var/mobile/Library/Preferences/%@.plist"), specifier.properties[@"defaults"]];
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	[settings addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:path]];
 	[settings setObject:value forKey:specifier.properties[@"key"]];
@@ -35,12 +37,16 @@
 
 - (void)sourceLink
 {
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/gilshahar7/VolumePercent"]];
+    UIApplication *application = [UIApplication sharedApplication];
+    NSURL *URL = [NSURL URLWithString:@"https://github.com/gilshahar7/VolumePercent"];
+    [application openURL:URL options:@{} completionHandler:^(BOOL success) {return;}];
 }
 
 - (void)donationLink
 {
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.paypal.me/gilshahar7"]];
+    UIApplication *application = [UIApplication sharedApplication];
+    NSURL *URL = [NSURL URLWithString:@"https://www.paypal.me/gilshahar77"];
+    [application openURL:URL options:@{} completionHandler:^(BOOL success) {return;}];
 }
 
 @end
