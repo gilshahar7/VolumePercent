@@ -1,4 +1,3 @@
-//#import "libcolorpicker.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <rootless.h>
@@ -85,7 +84,6 @@ static UIColor *colorWithHexString(NSString *hex) {
     [percentLabel setText:percentstr];//Set text in label.
     [percentLabel setFont:[UIFont systemFontOfSize:fontSizeEnlarged]];
     NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
     [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"enlargedColor"])];
     [percentLabel setTextAlignment:NSTextAlignmentCenter];//Set text alignment in label.
     [percentLabel setBaselineAdjustment:UIBaselineAdjustmentAlignBaselines];//Set line adjustment.
@@ -159,7 +157,6 @@ static UIColor *colorWithHexString(NSString *hex) {
 
 
         NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-        //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
         [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"minimizedColor"])];
         [percentLabel setFont:[UIFont systemFontOfSize:fontSizeMinimized]];
         [self.view layoutIfNeeded];
@@ -189,7 +186,6 @@ static UIColor *colorWithHexString(NSString *hex) {
           self.centerConstraint = nil;
 
           NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-          //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"minimizedColor"], @"#d3d3d3")];//Set text color in label.
             [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"minimizedColor"])];
 
           [UIView animateWithDuration:0.2 animations:^{
@@ -216,7 +212,6 @@ static UIColor *colorWithHexString(NSString *hex) {
           [self.sliderView addConstraints:self.topConstraint];
 
           NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-          //[percentLabel setTextColor:LCPParseColorString([prefs objectForKey:@"enlargedColor"], @"#d3d3d3")];//Set text color in label.
             [percentLabel setTextColor:colorWithHexString([prefs objectForKey:@"enlargedColor"])];
           self.orientationFlippedToLandscape = false;
           [UIView animateWithDuration:0.2 animations:^{
